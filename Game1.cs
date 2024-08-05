@@ -13,9 +13,15 @@ namespace Pacman
         private int _tileSize = 8;
         private Vector2 _tilePosition = new Vector2(100, 100);
 
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+
+            _graphics.PreferredBackBufferWidth = 1280; // Set your desired width here
+            _graphics.PreferredBackBufferHeight = 720; // Set your desired height here
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
