@@ -32,8 +32,6 @@ namespace Pacman
 
         private const int _tileSize = 8;
         private const int SCALE = 3;
-        private Vector2 _tilePosition = new Vector2(100, 100);
-        private Vector2 _tilePosition2 = new Vector2(600, 400);
 
         private const int mazeWidth = 28;
         private const int mazeHeight = 31;
