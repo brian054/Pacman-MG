@@ -9,6 +9,11 @@ using System;
  *  so we can switch out the tiles when pacman eats dots
  * 
  *  BEFORE THAT THO: Let's get Pacman on screen and moving around w/ collision
+ *  - pacman is now centered on screen
+ *      - implement loop for that
+ *  
+ *  - Move pacman with arrow keys (have a speed factor, and set a direction based on the key pressed
+ *  - Collide with walls
  */
 
 // IDEA:
@@ -93,25 +98,51 @@ namespace Pacman
             );
 
             // The Map w/ dots
+            //for (int i = 0; i < mazeHeight; i++)
+            //{
+            //    for (int j = 0; j < mazeWidth; j++)
+            //    {
+            //        // Clean this up
+            //        Rectangle srcRect3 = new Rectangle(j * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo
+            //        _spriteBatch.Draw(_pacmanSprites, new Vector2(j * _tileSize * SCALE, i * _tileSize * SCALE), srcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            //    }
+            //}
+
+            // The Map w/o dots
             for (int i = 0; i < mazeHeight; i++)
             {
-                for (int j = 0; j < mazeWidth; j++)
+                for (int j = 0; j <= mazeWidth; j++)
                 {
-                    // Clean this up
-                    Rectangle srcRect3 = new Rectangle(j * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo
+                    Rectangle srcRect3 = new Rectangle(j * _tileSize + mazeWidth * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
                     _spriteBatch.Draw(_pacmanSprites, new Vector2(j * _tileSize * SCALE, i * _tileSize * SCALE), srcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
                 }
             }
 
-            // The Map w/o dots
-            //for (int i = 0; i < mazeHeight; i++)
+            // Draw Pacman
+            //for (int i = 0; i < 2; i++)
             //{
-            //    for (int j = 0; j <= mazeWidth; j++)
+            //    for (int j = 0; j < 2; j++)
             //    {
-            //        Rectangle srcRect3 = new Rectangle(j * _tileSize + mazeWidth * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
-            //        _spriteBatch.Draw(_pacmanSprites, new Vector2(j * _tileSize * SCALE, i * _tileSize * SCALE), srcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            //        Rectangle pacmanSrcRect = new Rectangle(i + 60 * _tileSize, j * _tileSize, _tileSize, _tileSize); // dry thooo
+            //        _spriteBatch.Draw(_pacmanSprites, new Vector2(300, 300), pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
             //    }
             //}
+
+            // 23 * _tileSize * SCALE - 12
+            // hmmmmm
+
+            // to-do: Generalize this, remember we need offsetY = 12, I'm tired and it's Friday so I'm done w/ this for now
+            Rectangle pacmanSrcRect = new Rectangle(59 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+            _spriteBatch.Draw(_pacmanSprites, new Vector2(316, 23 * _tileSize * SCALE - 12), pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+
+            Rectangle pacmanSrcRect2 = new Rectangle(60 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+            _spriteBatch.Draw(_pacmanSprites, new Vector2(316 + _tileSize * SCALE, 23 * _tileSize * SCALE - 12), pacmanSrcRect2, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+
+            Rectangle pacmanSrcRect3 = new Rectangle(59 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+            _spriteBatch.Draw(_pacmanSprites, new Vector2(316, 24 * _tileSize * SCALE - 12), pacmanSrcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+
+            Rectangle pacmanSrcRect4 = new Rectangle(60 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+            _spriteBatch.Draw(_pacmanSprites, new Vector2(316 + _tileSize * SCALE, 24 * _tileSize * SCALE - 12), pacmanSrcRect4, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
 
             _spriteBatch.End();
 
