@@ -26,7 +26,6 @@ using System;
  * Maybe 3-4 small small minigames, and you could have a localized high score for your regular game, and then 
  * the individual mini games.
  */
-
 namespace Pacman
 {
     public class Game1 : Game
@@ -40,6 +39,24 @@ namespace Pacman
 
         private const int mazeWidth = 28;
         private const int mazeHeight = 31;
+
+        enum Dir { LEFT, RIGHT, UP, DOWN };
+
+        // Pacman base sprite srcRects
+        /*
+         * Luckily we can modify these by 2 to cycle through the animation of pacman
+         */
+        Rectangle pacmanSrcRect = new Rectangle(61 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect2 = new Rectangle(62 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect3 = new Rectangle(61 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect4 = new Rectangle(62 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+
+        Vector2 pacManTopLeftPos = new Vector2(316, 23 * _tileSize * SCALE - 12);
+        Vector2 pacManTopRightPos = new Vector2(316 + _tileSize * SCALE, 23 * _tileSize * SCALE - 12);
+        Vector2 pacManBottomLeftPos = new Vector2(316, 24 * _tileSize * SCALE - 12);
+        Vector2 pacManBottomRightPos = new Vector2(316 + _tileSize * SCALE, 24 * _tileSize * SCALE - 12);
+
+        Dir pacmanDir = Dir.LEFT;
 
         public Game1()
         {
@@ -81,6 +98,56 @@ namespace Pacman
                 Exit();
 
             // TODO: Add your update logic here
+            // Get the current state of the keyboard
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            // Check if a specific key is pressed
+            // Eventually we want to have this be directional, so it sets pacmans direction 
+            // based on the keyboard input. Use pacmans update method to change his position.
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                pacmanDir = Dir.LEFT; 
+            }
+            else if (keyboardState.IsKeyDown(Keys.D))
+            {
+                pacmanDir = Dir.RIGHT;
+            }
+            else if (keyboardState.IsKeyDown(Keys.W))
+            {
+                pacmanDir = Dir.UP;
+            }
+            else if (keyboardState.IsKeyDown(Keys.S))
+            {
+                pacmanDir = Dir.DOWN;
+            }
+
+            switch (pacmanDir)
+            {
+                case Dir.LEFT:
+                    pacManTopLeftPos += new Vector2(-4, 0);
+                    pacManTopRightPos += new Vector2(-4, 0);
+                    pacManBottomLeftPos += new Vector2(-4, 0);
+                    pacManBottomRightPos += new Vector2(-4, 0);
+                    break;
+                case Dir.RIGHT:
+                    pacManTopLeftPos += new Vector2(4, 0);
+                    pacManTopRightPos += new Vector2(4, 0);
+                    pacManBottomLeftPos += new Vector2(4, 0);
+                    pacManBottomRightPos += new Vector2(4, 0);
+                    break;
+                case Dir.UP:
+                    pacManTopLeftPos += new Vector2(0, -4);
+                    pacManTopRightPos += new Vector2(0, -4);
+                    pacManBottomLeftPos += new Vector2(0, -4);
+                    pacManBottomRightPos += new Vector2(0, -4);
+                    break;
+                case Dir.DOWN:
+                    pacManTopLeftPos += new Vector2(0, 4);
+                    pacManTopRightPos += new Vector2(0, 4);
+                    pacManBottomLeftPos += new Vector2(0, 4);
+                    pacManBottomRightPos += new Vector2(0, 4);
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -119,12 +186,12 @@ namespace Pacman
             }
 
             // Draw Pacman
-            //for (int i = 0; i < 2; i++)
+            //for (int i = 59; i <= 60 ; i++)
             //{
             //    for (int j = 0; j < 2; j++)
             //    {
-            //        Rectangle pacmanSrcRect = new Rectangle(i + 60 * _tileSize, j * _tileSize, _tileSize, _tileSize); // dry thooo
-            //        _spriteBatch.Draw(_pacmanSprites, new Vector2(300, 300), pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            //        //Rectangle pacmanSrcRect = new Rectangle(i + 60 * _tileSize, j * _tileSize, _tileSize, _tileSize); // dry thooo
+            //        //_spriteBatch.Draw(_pacmanSprites, new Vector2(300, 300), pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
             //    }
             //}
 
@@ -132,17 +199,19 @@ namespace Pacman
             // hmmmmm
 
             // to-do: Generalize this, remember we need offsetY = 12, I'm tired and it's Friday so I'm done w/ this for now
-            Rectangle pacmanSrcRect = new Rectangle(59 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
-            _spriteBatch.Draw(_pacmanSprites, new Vector2(316, 23 * _tileSize * SCALE - 12), pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
 
-            Rectangle pacmanSrcRect2 = new Rectangle(60 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
-            _spriteBatch.Draw(_pacmanSprites, new Vector2(316 + _tileSize * SCALE, 23 * _tileSize * SCALE - 12), pacmanSrcRect2, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            // srcRextX = 59 * tileSize, and 60 * tileSize
+            // srcRectY = 0, and 1 * tileSize
 
-            Rectangle pacmanSrcRect3 = new Rectangle(59 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
-            _spriteBatch.Draw(_pacmanSprites, new Vector2(316, 24 * _tileSize * SCALE - 12), pacmanSrcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            // pacmanCenterXPos = 316, and 316 + _tileSize * SCALE
+            // pacmanCenterYPos = 23 * _tileSize * SCALE - 12, and also sub in 24 for 23 to get the other one
 
-            Rectangle pacmanSrcRect4 = new Rectangle(60 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
-            _spriteBatch.Draw(_pacmanSprites, new Vector2(316 + _tileSize * SCALE, 24 * _tileSize * SCALE - 12), pacmanSrcRect4, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            // could have an array, one with xPos's, one with yPos's
+
+            _spriteBatch.Draw(_pacmanSprites, pacManTopLeftPos, pacmanSrcRect, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(_pacmanSprites, pacManTopRightPos, pacmanSrcRect2, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(_pacmanSprites, pacManBottomLeftPos, pacmanSrcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(_pacmanSprites, pacManBottomRightPos, pacmanSrcRect4, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
 
             _spriteBatch.End();
 
