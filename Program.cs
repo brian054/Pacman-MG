@@ -1,3 +1,3 @@
 ﻿
-using var game = new Pacman.Game1();
+using var game = new PacmanMG.Game1();
 game.Run();

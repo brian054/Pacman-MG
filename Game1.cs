@@ -26,7 +26,7 @@ using System;
  * Maybe 3-4 small small minigames, and you could have a localized high score for your regular game, and then 
  * the individual mini games.
  */
-namespace Pacman
+namespace PacmanMG
 {
     public class Game1 : Game
     {
@@ -58,6 +58,46 @@ namespace Pacman
 
         Dir pacmanDir = Dir.LEFT;
 
+        // 31 rows, 28 columns
+        string pacmanMapString =
+            "############################" +
+            "#............##............#" +
+            "#.####.#####.##.#####.####.#" +
+            "#o####.#####.##.#####.####o#" +
+            "#.####.#####.##.#####.####.#" +
+            "#..........................#" +
+            "#.####.##.########.##.####.#" +
+            "#.####.##.########.##.####.#" +
+            "#......##....##....##......#" +
+            "######.##### ## #####.######" +
+            "######.##### ## #####.######" +
+            "######.##          ##.######" +
+            "######.## ###  ### ##.######" +
+            "######.## #      # ##.######" +
+            "       .   #      #   .       " +
+            "######.## #      # ##.######" +
+            "######.## ######## ##.######" +
+            "######.##          ##.######" +
+            "######.## ######## ##.######" +
+            "######.## ######## ##.######" +
+            "#............##............#" +
+            "#.####.#####.##.#####.####.#" +
+            "#o####.#####.##.#####.####o#" +
+            "#..##......          ##...#" +
+            "####.##.##.########.##.##.###" +
+            "####.##.##.########.##.##.###" +
+            "#......##....##....##......#" +
+            "#.##########.##.##########.#" +
+            "#.##########.##.##########.#" +
+            "#..........................#" +
+            "############################";
+
+
+        char[,] pacmanMap = new char[mazeHeight, mazeWidth];
+
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -73,6 +113,16 @@ namespace Pacman
 
             int screenWidth = displayMode.Width;
             int screenHeight = displayMode.Height;
+
+            // Map Data Structure initalize
+            for (int i = 0; i < mazeHeight; i++)
+            {
+                for (int j = 0; j < mazeWidth; j++)
+                {
+                    pacmanMap[i, j] = pacmanMapString[i * mazeWidth + j];
+                }
+            }
+
 
             // Set the window size based on the users monitor size
             _graphics.PreferredBackBufferWidth = (int)(screenWidth * 0.6f);
@@ -124,6 +174,8 @@ namespace Pacman
             switch (pacmanDir)
             {
                 case Dir.LEFT:
+                    // make a pacman class and then have an array of positions 
+                    // then you can just do pacManPositions[i] += new Vector2(-4, 0) instead of 12 extra lines
                     pacManTopLeftPos += new Vector2(-4, 0);
                     pacManTopRightPos += new Vector2(-4, 0);
                     pacManBottomLeftPos += new Vector2(-4, 0);
@@ -176,14 +228,30 @@ namespace Pacman
             //}
 
             // The Map w/o dots
+            //for (int i = 0; i < mazeHeight; i++)
+            //{
+            //    for (int j = 0; j <= mazeWidth; j++)
+            //    {
+            //        Rectangle srcRect3 = new Rectangle(j * _tileSize + mazeWidth * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
+            //        _spriteBatch.Draw(_pacmanSprites, new Vector2(j * _tileSize * SCALE, i * _tileSize * SCALE), srcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
+            //    }
+            //}
+
+            // [row, column]
+            // test map
             for (int i = 0; i < mazeHeight; i++)
             {
-                for (int j = 0; j <= mazeWidth; j++)
+                for (int j = 0; j < mazeWidth; j++) // might have to do <=
                 {
-                    Rectangle srcRect3 = new Rectangle(j * _tileSize + mazeWidth * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
+                    //Rectangle srcRect3 = new Rectangle(j * _tileSize + mazeWidth * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
+                    Rectangle srcRect3 = new Rectangle(j * _tileSize, i * _tileSize, _tileSize, _tileSize); // dry thooo;
                     _spriteBatch.Draw(_pacmanSprites, new Vector2(j * _tileSize * SCALE, i * _tileSize * SCALE), srcRect3, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
                 }
             }
+
+            // Draw the one empty column you'll use to replace the dots when eaten
+            Rectangle srcRect_EmptySpace = new Rectangle(29 * _tileSize, 1 * _tileSize, _tileSize, _tileSize);
+            _spriteBatch.Draw(_pacmanSprites, new Vector2(200, 800), srcRect_EmptySpace, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
 
             // Draw Pacman
             //for (int i = 59; i <= 60 ; i++)
