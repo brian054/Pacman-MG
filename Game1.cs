@@ -46,15 +46,15 @@ namespace PacmanMG
         /*
          * Luckily we can modify these by 2 to cycle through the animation of pacman
          */
-        Rectangle pacmanSrcRect = new Rectangle(61 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
-        Rectangle pacmanSrcRect2 = new Rectangle(62 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
-        Rectangle pacmanSrcRect3 = new Rectangle(61 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
-        Rectangle pacmanSrcRect4 = new Rectangle(62 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect = new(61 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect2 = new(62 * _tileSize, 0 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect3 = new(61 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
+        Rectangle pacmanSrcRect4 = new(62 * _tileSize, 1 * _tileSize, _tileSize, _tileSize); // dry thooo
 
-        Vector2 pacManTopLeftPos = new Vector2(316, 23 * _tileSize * SCALE - 12);
-        Vector2 pacManTopRightPos = new Vector2(316 + _tileSize * SCALE, 23 * _tileSize * SCALE - 12);
-        Vector2 pacManBottomLeftPos = new Vector2(316, 24 * _tileSize * SCALE - 12);
-        Vector2 pacManBottomRightPos = new Vector2(316 + _tileSize * SCALE, 24 * _tileSize * SCALE - 12);
+        Vector2 pacManTopLeftPos = new(316, 23 * _tileSize * SCALE - 12);
+        Vector2 pacManTopRightPos = new(316 + _tileSize * SCALE, 23 * _tileSize * SCALE - 12);
+        Vector2 pacManBottomLeftPos = new(316, 24 * _tileSize * SCALE - 12);
+        Vector2 pacManBottomRightPos = new(316 + _tileSize * SCALE, 24 * _tileSize * SCALE - 12);
 
         Dir pacmanDir = Dir.LEFT;
 
@@ -94,9 +94,6 @@ namespace PacmanMG
 
 
         char[,] pacmanMap = new char[mazeHeight, mazeWidth];
-
-
-
 
         public Game1()
         {
